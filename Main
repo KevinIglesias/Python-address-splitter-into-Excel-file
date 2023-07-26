@@ -1,0 +1,42 @@
+import pandas as pd
+
+# Sample addresses (Replace this with your list of addresses)
+addresses = [
+    "3442 EAST LAKE DR, LAND O LAKES, FL 34639-4641",
+"4322 LONGSHORE DR, LAND O LAKES, FL 34639-4220",
+"21725 BELL LAKE RD, LAND O LAKES, FL 34639-4427",
+"5247 SEAHORSE DR, NEW PORT RICHEY, FL 34652-6042",
+"18506 DAJANA AVE, LAND O LAKES, FL 34638-6127",
+"9329 AMAZON DR, NEW PORT RICHEY, FL 34655-1663",
+"9154 DUFFER CT, HUDSON, FL 34667-6581",
+"3642 HENDRIX ST, NEW PORT RICHEY, FL 34652-6288",
+"8114 COLRAIN DR, PORT RICHEY, FL 34668-4405",
+"3261 GROVE PL, LAND O LAKES, FL 34639-4524",
+    # Add more addresses here
+]
+
+# Function to extract address components
+def extract_address_components(address):
+    try:
+        parts = address.split(",")
+        addr = parts[0]
+        city = parts[1].strip()
+        stateZip = parts[2].strip().split(" ");
+        state = stateZip[0]
+        zipcode = stateZip[1]
+    except:
+        print(f"Error for Address( {address}")
+        return "","","",""
+    return addr, city, state, zipcode
+
+# Extract components for all addresses
+data = [extract_address_components(addr) for addr in addresses]
+
+# Create a pandas DataFrame
+df = pd.DataFrame(data, columns=['Address', 'City', 'State', 'ZIP Code'])
+
+# Save to Excel
+output_file = 'extracted_addresses.xlsx'
+df.to_excel(output_file, index=False)
+
+print(f"Data extracted successfully and saved to {output_file}")
